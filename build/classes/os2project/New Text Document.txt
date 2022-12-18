@@ -1,0 +1,325 @@
+
+                 Date noww=new Date();
+       // TimeTogetOutFromMainChair.setTime(noww.getTime() + 30000);
+               Runnable s1 =new CallThreadStudentsProducer();
+                       Thread t = new Thread(s1);
+
+               
+                  Runnable s2 =new CallThreadTackFromChairsToMainChairThread();
+                             Thread t2 = new Thread(s2);
+
+                   Runnable s3 =new CallThreadRemoveFromMainChair();
+     Thread t3 = new Thread(s3);
+     
+     
+     
+        t.start();
+        t2.start();        t3.start();
+
+            }
+        });
+ 
+        
+
+       
+         
+         
+   
+
+         
+             
+
+         
+
+   
+    
+    
+    
+    }
+//     static void CallThreadRemoveFromMainChair(){
+//        
+//        
+//          Thread StopMeeting = new Thread() {
+//    public void run() {
+//        try {
+//            while(true){
+//                Date DateNow=new Date();
+//
+//                if(!Isavlable&&DateNow.getTime() >= TimeTogetOutFromMainChair.getTime()){
+//                   SetMainChaireFree();
+//                    
+//                    
+//                
+//                }
+//           
+//
+//          
+//            }
+//        } catch(Exception v) {
+//            System.out.println(v);
+//        }
+//    }  
+//};
+//     StopMeeting.start();
+//        
+//    
+//    }
+    
+    
+   static class CallThreadRemoveFromMainChair implements Runnable{
+ public void run() {
+        try {
+            while(true){
+                Date DateNow=new Date();
+
+                if(!Isavlable&&DateNow.getTime() >= TimeTogetOutFromMainChair.getTime()){
+                   SetMainChaireFree();
+                    
+                    
+                
+                }
+           
+
+          
+            }
+        } catch(Exception v) {
+            System.out.println(v);
+        }
+    } 
+    }
+    
+    
+//   synchronized static void CallThreadStudentsProducer(){
+//    
+//      Thread StudentProducer = new Thread() {
+//    public void run() {
+//        try {
+//            while(true){
+//
+//            StudentModel std=CreateNewStudent();
+//            if(MainChair.Status=='E'&&Isavlable && Chairmodel3.Status=='E' &&Chairmodel1.Status=='E' && Chairmodel2.Status=='E'){
+//                 Isavlable=false;
+//                
+//                 SetStudentToMainChairByStudent(std);
+//               
+//              
+//            }else if(Chairmodel1.Status=='E'){
+//              AddStdToChar(Chairmodel1, std,Chair1);
+//            }else if(Chairmodel2.Status=='E'){
+//              AddStdToChar(Chairmodel2, std,Chair2);
+//              
+//            }else if(Chairmodel3.Status=='E'){
+//              AddStdToChar(Chairmodel3, std,Chair3);
+//            }else{
+//           
+//            }
+//            Long Duration=Math.abs(random.nextLong()%5000)+5000;
+//            Thread.sleep(Duration);
+//          
+//            }
+//        } catch(InterruptedException v) {
+//            System.out.println(v);
+//        }
+//    }  
+//};
+//     StudentProducer.start();
+//    }
+//    
+    
+   static class CallThreadStudentsProducer implements Runnable{
+ public void run() {
+        try {
+            while(true){
+
+            StudentModel std=CreateNewStudent();
+            if(MainChair.Status=='E'&&Isavlable && Chairmodel3.Status=='E' &&Chairmodel1.Status=='E' && Chairmodel2.Status=='E'){
+                 Isavlable=false;
+                
+                 SetStudentToMainChairByStudent(std);
+               
+              
+            }else if(Chairmodel1.Status=='E'){
+              AddStdToChar(Chairmodel1, std,Chair1);
+            }else if(Chairmodel2.Status=='E'){
+              AddStdToChar(Chairmodel2, std,Chair2);
+              
+            }else if(Chairmodel3.Status=='E'){
+              AddStdToChar(Chairmodel3, std,Chair3);
+            }else{
+           
+            }
+            Long Duration=Math.abs(random.nextLong()%5000)+5000;
+            Thread.sleep(Duration);
+          
+            }
+        } catch(InterruptedException v) {
+            System.out.println(v);
+        }
+    }        
+    }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   /*
+   
+    static void CallThreadTackFromChairsToMainChairThread(){
+    Thread MainThread = new Thread() {
+    public void run() {
+        try {
+            while(true){
+                if(Isavlable){
+                    
+                    GetStudentbyCount();
+                }
+              //  System.out.println("No Students");
+
+            }
+        } catch(Exception v){
+            System.out.println(v);
+        }
+    }  
+};
+     MainThread.start(); }
+   */
+   
+   static class CallThreadTackFromChairsToMainChairThread implements Runnable{
+   public void run() {
+        try {
+            while(true){
+                if(Isavlable){
+                    
+                    GetStudentbyCount();
+                }
+              //  System.out.println("No Students");
+
+            }
+        } catch(Exception v){
+            System.out.println(v);
+        }
+    }
+   
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+    
+    static void GetStudentbyCount(){
+        System.out.println(MainChair.Status); 
+        System.out.println(Counter);  
+        System.out.println(Isavlable);
+
+
+    if(Counter==1&&Chairmodel1.Status=='S'&&Isavlable){
+        System.out.println(1);
+        Isavlable=false;
+        Chairmodel1.Status='E';
+        MainChair.StudentId=Chairmodel1.StudentId;
+        SetChairFreeAndAddToMainChair(Chairmodel1,Chair1);
+        Counter=2;
+
+    }else
+      if(Counter==2&&Chairmodel2.Status=='S'&&Isavlable){
+                  System.out.println(2);
+
+        Isavlable=false;
+        Chairmodel2.Status='E';
+        MainChair.StudentId=Chairmodel2.StudentId;
+        SetChairFreeAndAddToMainChair(Chairmodel2,Chair2);
+ Counter=3;
+    }
+      else if(Counter==3&&Chairmodel3.Status=='S'&&Isavlable){
+                  System.out.println(3);
+
+        Isavlable=false;
+        Chairmodel3.Status='E';
+        MainChair.StudentId=Chairmodel3.StudentId;
+       SetChairFreeAndAddToMainChair(Chairmodel3,Chair3);
+        Counter=1;
+    }
+    
+    
+    }
+    
+    static void SetChairFreeAndAddToMainChair(ChairModel Chairmodel,JPanel pan){
+       
+        Chairmodel.Status='E';
+        MainChair.Status='S';
+        
+ta.setBackground(Color.black);
+        MainChair.StudentId=Chairmodel.StudentId;
+        System.out.println("Student From Chair "+Integer.toString(Chairmodel.Id)+" Add To Main Chair");
+        pan.setBackground(Color.GREEN);
+        MainChairPanel.setBackground(Color.YELLOW);
+        Date noww=new Date();
+        TimeTogetOutFromMainChair.setTime(noww.getTime() + 10000);
+       ta.setBackground(Color.red);
+
+    }
+    static void SetStudentToMainChairByStudent(StudentModel std){
+ta.setBackground(Color.black);
+           MainChair.Status='S';
+           MainChair.StudentId=std.Id;
+           MainChairPanel.setBackground(Color.red);
+           System.out.println("Student "+Integer.toString(std.Id)+" Add To Main Chair");
+           
+           Random rn = new Random();
+           int answer = rn.nextInt(10) + 1;
+           Date noww=new Date();
+           TimeTogetOutFromMainChair.setTime(noww.getTime() + 10000);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    static void SetMainChaireFree(){
+      Isavlable=true;
+      MainChair.Status='E';
+      ta.setBackground(Color.white);
+      System.out.println("Main Chair Is Free Now");
+      MainChairPanel.setBackground(Color.white);   
+      ta.setBackground(Color.white);
+
+    }
+    
+    
+   public static void  SetImageToPanel(JPanel panel,String image){
+       System.out.print(Path.of("").toAbsolutePath().toString());
+       ImageIcon img = new ImageIcon( Path.of("").toAbsolutePath().toString()+"/src/os2project/"+image);
+       JLabel l = new JLabel(img);
+       panel.removeAll();
+       panel.revalidate();
+       panel.repaint(); 
+       panel.add(l);
+       panel.revalidate();
+       panel.repaint(); 
+   
+    
+    }
+   static void AddStdToChar(ChairModel chair,StudentModel std ,JPanel panel){
+        chair.Status='S';       
+        chair.StudentId=std.Id;   
+        panel.setBackground(Color.red);
+        System.out.println("Studen "+Integer.toString(std.Id)+"Added To Chair "+Integer.toString(chair.Id));
+   }
+
+   static StudentModel CreateNewStudent(){
+      StudentModel x  =new StudentModel(Students.size()+1,0);
+      Students.add(x);
+      return x;
+    }

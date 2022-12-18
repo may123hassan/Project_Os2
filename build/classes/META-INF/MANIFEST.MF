@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.8
+Created-By: 11.0.13+8-Ubuntu-0ubuntu1.20.04 (Ubuntu)
+Class-Path: 
+X-COMMENT: Main-Class will be added automatically by build
+Main-Class: os2project.Os2Project
+
